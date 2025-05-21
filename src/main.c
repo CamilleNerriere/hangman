@@ -3,15 +3,12 @@
 #include <string.h>
 #include <ctype.h>
 
-int read(char *string, int length);
-void emptyBuffer();
+#include "./include/game.h"
+#include "./include/input.h"
+
+
 void initializePlayerGuessTries(char *playerGuessTries, int wordLength);
-void strlwr(char *s);
-void addTryToAskedLetter(char *askedLetters, char *lastLetterAsked);
-void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLength);
-void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLength);
-void printHangman();
-void playGuessWord(char *playerGuessTries, int *hasWon, int *remainingTries, char *guessWord, char *askedLetters, char *lastLetterAsked, int wordLength, int *nbOfTries);
+
 
 int main(int argc, const char *argv[])
 {
@@ -40,44 +37,12 @@ int main(int argc, const char *argv[])
 
     initializePlayerGuessTries(playerGuessTries, wordLength);
 
-    playGuessWord(playerGuessTries, &hasWon, &remainingTries, guessWord, askedLetters, &lastLetterAsked, wordLength, &nbOfTries);
+    playHangman(playerGuessTries, &hasWon, &remainingTries, guessWord, askedLetters, &lastLetterAsked, wordLength, &nbOfTries);
 
     free(playerGuessTries);
     return 0;
 }
 
-int read(char *string, int length)
-{
-    char *startingPos = NULL;
-
-    if (fgets(string, length, stdin) != NULL)
-    {
-        startingPos = strchr(string, '\n');
-        if (startingPos != NULL)
-        {
-            *startingPos = '\0';
-        }
-        else
-        {
-            emptyBuffer();
-        }
-
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-void emptyBuffer()
-{
-    int c = 0;
-    while (c != '\n' && c != EOF)
-    {
-        c = getchar();
-    }
-}
 
 void initializePlayerGuessTries(char *playerGuessTries, int wordLength)
 {
@@ -87,111 +52,6 @@ void initializePlayerGuessTries(char *playerGuessTries, int wordLength)
     }
 }
 
-void strlwr(char *s)
-{
-    while (*s)
-    {
-        *s = tolower(*s);
-        s++;
-    }
-}
 
-void addTryToAskedLetter(char *askedLetters, char *lastLetterAsked)
-{
-    *lastLetterAsked = getchar();
-    emptyBuffer();
 
-    for (size_t i = 0; i < 50; i++)
-    {
-        if (askedLetters[i] == '\0')
-        {
-            askedLetters[i] = *lastLetterAsked;
-            break;
-        }
-    }
-}
 
-void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLength)
-{
-    int guessRight = 0;
-
-    for (size_t i = 0; i < wordLength; i++)
-    {
-        if (guessWord[i] == lastLetterAsked)
-        {
-            playerGuessTries[i] = lastLetterAsked;
-            guessRight = 1;
-        }
-    }
-
-    if (guessRight == 1)
-    {
-        printf("Bien joué, le mot contient bien la lettre %c \n", lastLetterAsked);
-    }
-    else
-    {
-        (*remainingTries)--;
-        printf("Bien tenté, mais le mot ne contient pas la lettre %c \n", lastLetterAsked);
-    }
-}
-
-void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLength)
-{
-    int remainLetterToGuess = 0;
-    for (size_t i = 0; i < wordLength; i++)
-    {
-        if (playerGuessTries[i] == '*')
-        {
-            remainLetterToGuess = 1;
-        }
-    }
-
-    if (remainLetterToGuess == 0)
-    {
-        *hasWon = 1;
-    }
-}
-
-void printHangman()
-{
-    printf("\n");
-    printf("  _______\n");
-    printf(" |/      |\n");
-    printf(" |      (_)\n");
-    printf(" |      \\|/\n");
-    printf(" |       |\n");
-    printf(" |      / \\\n");
-    printf(" |\n");
-    printf("_|___\n");
-    printf("\n Perdu ! \n");
-}
-
-void playGuessWord(char *playerGuessTries, int *hasWon, int *remainingTries, char *guessWord, char *askedLetters, char *lastLetterAsked, int wordLength, int *nbOfTries)
-{
-    while (*hasWon != 1 && *remainingTries > 0)
-    {
-        printf("Joueur 2 - Mot à deviner : %s \n\n", playerGuessTries);
-        printf("Nombre de tentatives restantes : %d \n\n", *remainingTries);
-        printf("Devinez une lettre : ");
-        addTryToAskedLetter(askedLetters, lastLetterAsked);
-        printf("Lettres déja demandées : ");
-        for (size_t i = 0; i < 50 && askedLetters[i] != '0'; i++)
-        {
-            printf("%c ", askedLetters[i]);
-        }
-        printf("\n\n");
-
-        checkIfGoodTry(*lastLetterAsked, playerGuessTries, guessWord, remainingTries, wordLength);
-        checkIfHasWon(playerGuessTries, hasWon, wordLength);
-        (*nbOfTries)++;
-    }
-
-    if (*hasWon == 1)
-    {
-        printf("Bravo, vous avez gagné en %d coups \n", *nbOfTries);
-    }
-    else
-    {
-        printHangman();
-    }
-}
