@@ -133,7 +133,7 @@ void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWor
 {
     int guessRight = 0;
 
-    for (size_t i = 0; i <= wordLenght; i++)
+    for (size_t i = 0; i < wordLenght; i++)
     {
         if (guessWord[i] == lastLetterAsked)
         {
@@ -156,7 +156,7 @@ void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWor
 void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLenght)
 {
     int remainLetterToGuess = 0;
-    for (size_t i = 0; i <= wordLenght; i++)
+    for (size_t i = 0; i < wordLenght; i++)
     {
         if (playerGuessTries[i] == '*')
         {
