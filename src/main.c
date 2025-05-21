@@ -28,6 +28,12 @@ int main(int argc, const char *argv[])
 
     char *playerGuessTries = malloc(sizeof(char) * wordLength);
 
+    if (!playerGuessTries)
+    {
+        fprintf(stderr, "Malloc Error.\n");
+        return 1;
+    }
+
     char askedLetters[50] = {0};
     char lastLetterAsked = 0;
 
