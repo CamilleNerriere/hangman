@@ -1,0 +1,25 @@
+# Fichiers exécutables
+mon_programme
+*.exe
+*.out
+
+# Fichiers objets
+*.o
+build/
+
+# Fichiers de débogage
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Fichiers temporaires
+*~
+*.swp
+*.swo
+
+# Fichiers spécifiques à VS Code
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
