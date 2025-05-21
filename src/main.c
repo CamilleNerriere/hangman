@@ -8,8 +8,8 @@ void emptyBuffer();
 void initializePlayerGuessTries(char *playerGuessTries, int wordLength);
 void strlwr(char *s);
 void addTryToAskedLetter(char *askedLetters, char *lastLetterAsked);
-void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLenght);
-void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLenght);
+void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLength);
+void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLength);
 void printHangman();
 
 int main(int argc, const char *argv[])
@@ -24,14 +24,14 @@ int main(int argc, const char *argv[])
     read(guessWord, 50);
     strlwr(guessWord);
 
-    int wordLenght = strlen(guessWord);
+    int wordLength = strlen(guessWord);
 
-    char *playerGuessTries = malloc(sizeof(char) * wordLenght);
+    char *playerGuessTries = malloc(sizeof(char) * wordLength);
 
     char askedLetters[50] = {0};
     char lastLetterAsked = 0;
 
-    initializePlayerGuessTries(playerGuessTries, wordLenght);
+    initializePlayerGuessTries(playerGuessTries, wordLength);
 
     while (hasWon != 1 && remainingTries > 0)
     {
@@ -46,8 +46,8 @@ int main(int argc, const char *argv[])
         }
         printf("\n\n");
 
-        checkIfGoodTry(lastLetterAsked, playerGuessTries, guessWord, &remainingTries, wordLenght);
-        checkIfHasWon(playerGuessTries, &hasWon, wordLenght);
+        checkIfGoodTry(lastLetterAsked, playerGuessTries, guessWord, &remainingTries, wordLength);
+        checkIfHasWon(playerGuessTries, &hasWon, wordLength);
         nbOfTries++;
     }
 
@@ -129,11 +129,11 @@ void addTryToAskedLetter(char *askedLetters, char *lastLetterAsked)
     }
 }
 
-void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLenght)
+void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWord, int *remainingTries, int wordLength)
 {
     int guessRight = 0;
 
-    for (size_t i = 0; i < wordLenght; i++)
+    for (size_t i = 0; i < wordLength; i++)
     {
         if (guessWord[i] == lastLetterAsked)
         {
@@ -153,10 +153,10 @@ void checkIfGoodTry(char lastLetterAsked, char *playerGuessTries, char *guessWor
     }
 }
 
-void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLenght)
+void checkIfHasWon(char *playerGuessTries, int *hasWon, int wordLength)
 {
     int remainLetterToGuess = 0;
-    for (size_t i = 0; i < wordLenght; i++)
+    for (size_t i = 0; i < wordLength; i++)
     {
         if (playerGuessTries[i] == '*')
         {
