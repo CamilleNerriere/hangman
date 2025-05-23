@@ -1,5 +1,5 @@
-#include "./include/game.h"
-#include "./include/input.h"
+#include "../include/game.h"
+#include "../include/input.h"
 
 void addTryToAskedLetter(char *askedLetters, char *lastLetterAsked)
 {

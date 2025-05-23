@@ -1,4 +1,4 @@
-#include "./include/input.h"
+#include "../include/input.h"
 
 int read(char *string, int length)
 {

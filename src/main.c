@@ -3,8 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "./include/game.h"
-#include "./include/input.h"
+#include "../include/game.h"
+#include "../include/input.h"
 
 
 void initializePlayerGuessTries(char *playerGuessTries, int wordLength);
